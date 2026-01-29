@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NU Cebu Disaster Preparedness Hub - Building community resilience through social media awareness">
+    <meta name="keywords" content="disaster preparedness, social media, NU Cebu, case study">
+    <title>Disaster Preparedness Hub | NU Cebu - MAHGZ Team</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===========================
+           DESIGN TOKENS & RESET
+           =========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #0a0a0f;
+            --color-surface: #1a1a24;
+            --color-surface-elevated: #242433;
+            --color-primary: #00d9ff;
+            --color-secondary: #ff006b;
+            --color-accent: #00ff88;
+            --color-warning: #ffaa00;
+            --color-text: #ffffff;
+            --color-text-muted: #a0a0b0;
+            --color-border: rgba(255, 255, 255, 0.1);
+            --color-success: #00ff88;
+            --color-error: #ff4757;
+            
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            --sidebar-width: 280px;
+            --chat-width: 360px;
+            --header-height: 80px;
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(0, 217, 255, 0.3);
+            
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+            --transition-slow: 400ms ease;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        button {
+            font-family: inherit;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        input, select, textarea {
+            font-family: inherit;
+            color: inherit;
+        }
+
+        /* ===========================
+           SCROLLBAR
+           =========================== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-secondary);
+        }
+
+        /* ===========================
+           WELCOME SCREEN
+           =========================== */
+        .welcome-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a0f;
+            overflow: auto;
+        }
+
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .welcome-bg-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 230, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 230, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+            margin: auto;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-logo {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-emoji {
+            font-size: 5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .welcome-title {
+            margin-bottom: 1.5rem;
+        }
+
+        .title-main {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00e6ff, #ff00c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .title-sub {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .welcome-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .welcome-features {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 230, 255, 0.05);
+            border: 1px solid rgba(0, 230, 255, 0.2);
+            border-radius: 12px;
+            transition: all var(--transition-base);
+            min-width: 150px;
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 230, 255, 0.1);
+            border-color: rgba(0, 230, 255, 0.5);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+        }
+
+        .feature-item span:last-child {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .welcome-btn {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #00e6ff, #ff00c8);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 40px rgba(0, 230, 255, 0.4);
+            transition: all var(--transition-base);
+            margin-bottom: 2rem;
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 230, 255, 0.6);
+        }
+
+        .welcome-footer {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 230, 255, 0.2);
+            text-align: center;
+        }
+
+        .footer-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logos-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .powered-by-text {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(1.1) drop-shadow(0 0 8px rgba(0, 230, 255, 0.3));
+            transition: all var(--transition-base);
+        }
+
+        .footer-logo:hover {
+            filter: brightness(1.3) drop-shadow(0 0 12px rgba(0, 230, 255, 0.5));
+            transform: scale(1.05);
+        }
+
+        .footer-credit {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-credit strong {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .team-members {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0, 230, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-primary);
+            line-height: 1.6;
+        }
+
+        .team-members strong {
+            color: var(--color-accent);
+        }
+
+        /* ===========================
+           AUTH SCREEN
+           =========================== */
+        .auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a24 100%);
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .auth-screen.active {
+            display: flex;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+            animation: slideInUp 0.6s ease;
+            margin: auto;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .auth-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: var(--space-xs);
+            color: var(--color-text);
+        }
+
+        .auth-subtitle {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .auth-form {
+            margin-bottom: var(--space-xl);
+        }
+
+        .form-field {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-field label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-xs);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: var(--space-md);
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all var(--transition-base);
+            color: var(--color-text);
+        }
+
+        .form-field input::placeholder,
+        .form-field select::placeholder {
+            color: var(--color-text-muted);
+            opacity: 0.5;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+
+        .form-field select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300d9ff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            cursor: pointer;
+            padding: var(--space-md);
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            transition: all var(--transition-base);
+        }
+
+        .checkbox-label:hover {
+            border-color: var(--color-primary);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-primary);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-base);
+            flex-shrink: 0;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+            background: var(--color-primary);
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+            content: '✓';
+            color: var(--color-bg);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .auth-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: var(--space-md) var(--space-lg);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 8px;
+            transition: all var(--transition-base);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-bg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md), var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .security-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: var(--space-md);
+        }
+
+        .auth-note {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===========================
+           APP CONTAINER
+           =========================== */
+        .app-container {
+            display: none;
+            grid-template-columns: var(--sidebar-width) 1fr var(--chat-width);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container.active {
+            display: grid;
+        }
+
+        /* ===========================
+           SIDEBAR
+           =========================== */
+        .app-sidebar {
+            background: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+
+        .version-badge {
+            padding: var(--space-xs) var(--space-sm);
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            background: var(--color-bg);
+            margin: var(--space-lg);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 50%;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .user-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .user-section {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            display: block;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: left;
+            transition: all var(--transition-base);
+            background: transparent;
+            border: none;
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--color-surface-elevated);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 0, 107, 0.1));
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .nav-icon {
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            margin: var(--space-lg);
+            background: rgba(255, 0, 107, 0.1);
+            border: 1px solid var(--color-secondary);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-secondary);
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 0, 107, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===========================
+           MAIN CONTENT
+           =========================== */
+        .app-main {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--color-bg);
+        }
+
+        .app-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-2xl);
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            line-height: 1.2;
+            color: var(--color-primary);
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--color-accent);
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-accent);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-2xl);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section-header {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: var(--space-sm);
+            color: var(--color-primary);
+        }
+
+        .section-header p {
+            color: var(--color-text-muted);
+            font-size: 1rem;
+        }
+
+        /* ===========================
+           PLATFORMS GRID
+           =========================== */
+        .platforms-grid {
+            display: grid;
+            gap: var(--space-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .platform-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            border-color: var(--color-primary);
+            transform: translateX(4px);
+            background: rgba(0, 217, 255, 0.02);
+        }
+
+        .platform-card.voted {
+            background: rgba(0, 217, 255, 0.05);
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .platform-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all var(--transition-base);
+        }
+
+        .platform-card.voted .platform-checkbox {
+            background: var(--color-primary);
+        }
+
+        .platform-card.voted .platform-checkbox::after {
+            content: '✓';
+            color: var(--color-bg);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .platform-info {
+            flex: 1;
+        }
+
+        .platform-name {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--space-xs);
+            color: var(--color-text);
+        }
+
+        .platform-votes {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-xs);
+        }
+
+        .platform-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .platform-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 999px;
+            transition: width var(--transition-slow);
+        }
+
+        /* ===========================
+           STATS ROW
+           =========================== */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .stat-box {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            transition: all var(--transition-base);
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+        }
+
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+        }
+
+        /* ===========================
+           RESULTS GRID
+           =========================== */
+        .results-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .result-card {
+            padding: var(--space-lg);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            transition: all var(--transition-base);
+        }
+
+        .result-card:hover {
+            border-color: var(--color-primary);
+            transform: translateX(4px);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .result-name {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .result-percentage {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .result-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .result-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 999px;
+            transition: width var(--transition-slow);
+        }
+
+        .result-votes {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-top: var(--space-xs);
+        }
+
+        /* ===========================
+           CHAT SIDEBAR
+           =========================== */
+        .chat-sidebar {
+            background: var(--color-surface);
+            border-left: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .chat-icon {
+            font-size: 1.5rem;
+        }
+
+        .chat-title h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .chat-status {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            letter-spacing: 0.05em;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .chat-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--color-text-muted);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
+            opacity: 0.5;
+        }
+
+        .chat-message {
+            animation: slideInLeft 0.3s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message-user {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .message-content {
+            padding: var(--space-md);
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .message-content a {
+            color: var(--color-accent);
+            text-decoration: underline;
+        }
+
+        .message-time {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            margin-top: var(--space-xs);
+        }
+
+        .chat-input-wrapper {
+            padding: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: var(--space-md);
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all var(--transition-base);
+            resize: none;
+            max-height: 100px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+
+        .chat-input::placeholder {
+            color: var(--color-text-muted);
+            opacity: 0.5;
+        }
+
+        .chat-send-btn {
+            padding: var(--space-md) var(--space-lg);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            border: none;
+            flex-shrink: 0;
+        }
+
+        .chat-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md), var(--shadow-glow);
+        }
+
+        /* ===========================
+           TOAST NOTIFICATIONS
+           =========================== */
+        .toast-container {
+            position: fixed;
+            bottom: var(--space-xl);
+            right: var(--space-xl);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            pointer-events: none;
+        }
+
+        .toast {
+            padding: var(--space-md) var(--space-lg);
+            background: var(--color-surface);
+            border: 1px solid var(--color-primary);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            animation: slideInRight 0.3s ease;
+            pointer-events: auto;
+            max-width: 300px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast.error {
+            border-color: var(--color-error);
+            border-left-color: var(--color-error);
+        }
+
+        .toast.success {
+            border-color: var(--color-accent);
+            border-left-color: var(--color-accent);
+        }
+
+        .toast.warning {
+            border-color: var(--color-warning);
+            border-left-color: var(--color-warning);
+        }
+
+        /* ===========================
+           GUIDELINES & ABOUT
+           =========================== */
+        .guidelines-content,
+        .about-content {
+            display: grid;
+            gap: var(--space-lg);
+        }
+
+        .guideline-card,
+        .about-card {
+            padding: var(--space-xl);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 12px;
+        }
+
+        .guideline-card h3,
+        .about-card h3 {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            margin-bottom: var(--space-md);
+            color: var(--color-primary);
+        }
+
+        .guideline-card p,
+        .about-card p {
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        /* ===========================
+           FOOTER CREDITS
+           =========================== */
+        .app-footer {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            padding: var(--space-lg);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .app-footer strong {
+            color: var(--color-primary);
+        }
+
+        /* ===========================
+           RESPONSIVE
+           =========================== */
+        @media (max-width: 1200px) {
+            .app-container {
+                grid-template-columns: var(--sidebar-width) 1fr;
+            }
+            
+            .chat-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --space-xl: 1.5rem;
+                --sidebar-width: 100%;
+            }
+
+            .app-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+            }
+            
+            .app-sidebar {
+                grid-column: 1;
+                grid-row: 1;
+                flex-direction: row;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+                max-height: 120px;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .sidebar-header,
+            .user-card,
+            .sidebar-nav,
+            .logout-btn {
+                flex-direction: row;
+                padding: var(--space-md);
+                margin: 0;
+            }
+
+            .sidebar-nav {
+                flex-direction: row;
+                gap: var(--space-sm);
+            }
+
+            .nav-btn {
+                white-space: nowrap;
+                padding: var(--space-sm) var(--space-md);
+                font-size: 0.85rem;
+            }
+
+            .app-main {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .chat-sidebar {
+                display: flex;
+                grid-column: 1;
+                grid-row: 3;
+                max-height: 300px;
+            }
+
+            .content-wrapper {
+                padding: var(--space-lg);
+            }
+
+            .auth-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .title-sub {
+                font-size: 1.2rem;
+            }
+
+            .footer-logos-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-container {
+                padding: var(--space-xl);
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .footer-logo {
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-bg-pattern"></div>
+        <div class="welcome-content">
+            <div class="welcome-logo">
+                <span class="logo-emoji"></span>
+            </div>
+            
+            <div class="welcome-title">
+                <span class="title-main">DISASTER</span>
+                <span class="title-sub">PREPAREDNESS</span>
+            </div>
+            
+            <p class="welcome-description">
+                Building safer communities through social media awareness
+            </p>
+            
+            <div class="welcome-features">
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <span>Vote</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💬</span>
+                    <span>Chat</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📈</span>
+                    <span>Results</span>
+                </div>
+            </div>
+            
+            <button class="welcome-btn" onclick="startApp()">
+                <span>START NOW</span>
+                <span>→</span>
+            </button>
+
+            <div class="welcome-footer">
+                <p class="footer-label">A Science, Technology & Society Case Study</p>
+                
+                <div class="footer-logos-section">
+                    <span class="powered-by-text">⚡ Powered by</span>
+                    <div class="logo-item">
+                        <img src="Amazon1.png" alt="NU Cebu" class="footer-logo" style="height: 60px;">
+                    </div>
+                    <span class="powered-by-text">&</span>
+                    <div class="logo-item">
+                        <img src="AWS LC NU Cebu Official LOGO.png" alt="AWS" class="footer-logo" style="height: 150px;">
+                    </div>
+                </div>
+
+                <p class="footer-credit">🛠️ Developer: <strong>Marcus G. Guido</strong></p>
+                <p class="footer-credit">👥 Team: <strong>MAHGZ TEAM</strong></p>
+                <div class="team-members">
+                    <strong>Team Members:</strong><br>
+                    Guido, Marcus G.<br>
+                    Tawoy, Alexandre Gabriel A.<br>
+                    Lee, Hyeon Jae B.<br>
+                    Casinillo, Geordeon John S.<br>
+                    Baguio, Zean Andrie M.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Screen -->
+    <div id="authScreen" class="auth-screen">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-badge">
+                    <span>🎓</span>
+                    <span>NU CEBU BSCS STUDENT PORTAL</span>
+                </div>
+                <h2 class="auth-title">Login</h2>
+                <p class="auth-subtitle">Access the Disaster Preparedness Hub</p>
+            </div>
+
+            <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+                <div class="form-field">
+                    <label for="nameInput">👤 Full Name</label>
+                    <input 
+                        type="text" 
+                        id="nameInput" 
+                        placeholder="Enter your full name"
+                        required
+                        minlength="2"
+                        maxlength="50"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="sectionInput">📚 Section</label>
+                    <select id="sectionInput" required>
+                        <option value="">Select your section</option>
+                        <option value="CS251">CS251</option>
+                        <option value="CS252">CS252</option>
+                        <option value="CS253">CS253</option>
+                        <option value="CS254">CS254</option>
+                        <option value="Guest">Guest User</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="comsaiCheckbox">
+                        <span class="checkbox-custom"></span>
+                        <span>I am a NU Cebu COMSIE Student</span>
+                    </label>
+                </div>
+
+                <div class="auth-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <span>🔐</span>
+                        <span>Sign In</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="loginAsGuest()">
+                        <span>👥</span>
+                        <span>Guest</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <div class="security-indicator">
+                    <span>🔒</span>
+                    <span>Secure</span>
+                </div>
+                <p class="auth-note">Science, Technology & Society Case Study</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appContainer" class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="logo-icon">🎯</span>
+                    <span>MAHGZ CASE STUDY</span>
+                </div>
+                <span class="version-badge">v1.0</span>
+            </div>
+
+            <div class="user-card">
+                <div class="user-avatar">👤</div>
+                <div class="user-info">
+                    <span class="user-label">Logged in as</span>
+                    <span class="user-name" id="userName">Loading...</span>
+                    <span class="user-section" id="userSection">-</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" onclick="navigateTo('voting')">
+                    <span class="nav-icon">📊</span>
+                    <span>Voting</span>
+                </button>
+                <button class="nav-btn" onclick="navigateTo('results')">
+                    <span class="nav-icon">📈</span>
+                    <span>Results</span>
+                </button>
+                <button class="nav-btn" onclick="navigateTo('guidelines')">
+                    <span class="nav-icon">📋</span>
+                    <span>Guide</span>
+                </button>
+                <button class="nav-btn" onclick="navigateTo('about')">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </button>
+            </nav>
+
+            <button class="logout-btn" onclick="logout()">
+                <span>🔓</span>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <header class="app-header">
+                <div>
+                    <div class="header-title" id="pageTitle">Building Disaster Preparedness</div>
+                    <div class="header-subtitle" id="pageSubtitle">Vote on the most effective social media platforms</div>
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>LIVE</span>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Voting Section -->
+                <section id="votingSection" class="content-section active">
+                    <div class="section-header">
+                        <h2>🗳️ Social Media Platform Rankings</h2>
+                        <p>Select which platforms you believe are most effective for disaster preparedness</p>
+                    </div>
+
+                    <div id="platformsList" class="platforms-grid"></div>
+
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <span class="stat-icon">🗳️</span>
+                            <div class="stat-content">
+                                <strong class="stat-number" id="myVoteCount">0</strong>
+                                <span class="stat-label">Your Votes</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-icon">📊</span>
+                            <div class="stat-content">
+                                <strong class="stat-number" id="totalVoteCount">0</strong>
+                                <span class="stat-label">Total Votes</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-icon">👥</span>
+                            <div class="stat-content">
+                                <strong class="stat-number" id="participantCount">0</strong>
+                                <span class="stat-label">Participants</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-icon">💬</span>
+                            <div class="stat-content">
+                                <strong class="stat-number" id="messageCount">0</strong>
+                                <span class="stat-label">Messages</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section id="resultsSection" class="content-section">
+                    <div class="section-header">
+                        <h2>📊 Live Results</h2>
+                        <p>Real-time voting statistics from all participants</p>
+                    </div>
+                    <div id="resultsList" class="results-grid"></div>
+                </section>
+
+                <!-- Guidelines Section -->
+                <section id="guidelinesSection" class="content-section">
+                    <div class="section-header">
+                        <h2>📋 Guidelines</h2>
+                        <p>How to participate in this case study</p>
+                    </div>
+                    <div class="guidelines-content">
+                        <div class="guideline-card">
+                            <h3>🎯 Objective</h3>
+                            <p>Evaluate which social media platforms are most effective for disaster preparedness and emergency communication in our community.</p>
+                        </div>
+                        <div class="guideline-card">
+                            <h3>✅ How to Vote</h3>
+                            <p>Select the platforms you believe are most effective. You can vote for multiple platforms. Your votes are saved automatically and visible to everyone.</p>
+                        </div>
+                        <div class="guideline-card">
+                            <h3>💬 Community Chat</h3>
+                            <p>Share your insights, tips, and relevant links with the community. All messages are public and permanent.</p>
+                        </div>
+                        <div class="guideline-card">
+                            <h3>📊 Results</h3>
+                            <p>View real-time statistics showing which platforms the community finds most effective. Results update instantly as everyone votes.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section id="aboutSection" class="content-section">
+                    <div class="section-header">
+                        <h2>ℹ️ About This Project</h2>
+                        <p>Science, Technology & Society Case Study</p>
+                    </div>
+                    
+                    <div class="about-content">
+                        <div class="about-card">
+                            <h3><strong>Team List:</strong></h3><br>
+                    Guido, Marcus G.<br>
+                    Tawoy, Alexandre Gabriel A.<br>
+                    Lee, Hyeon Jae B.<br>
+                    Casinillo, Geordeon John S.<br>
+                    Baguio, Zean Andrie M.
+                            
+                    <p>This Team studying and advocates building Disaster Preparedness Through Social Media NU Cebu, College of Computer Studies (BSCS).</p>
+                        </div>
+
+                    <div class="about-content">
+                        <div class="about-card">
+                            <h3>🎓 Academic Context</h3>
+                            <p>This project is a case study for the Science, Technology & Society course at NU Cebu, College of Computer Studies (BSCS).</p>
+                        </div>
+                        <div class="about-card">
+                            <h3>🎯 Research Focus</h3>
+                            <p>We are studying the effectiveness of social media platforms in disaster preparedness, emergency communication, and community resilience.</p>
+                        </div>
+                        <div class="about-card">
+                            <h3>👥 Target Participants</h3>
+                            <p>NU Cebu Computer Science students (CS251-CS254) and guests interested in disaster preparedness.</p>
+                        </div>
+                        <div class="about-card">
+                            <h3>🔒 Data Privacy</h3>
+                            <p>All data collected is used solely for academic purposes. Your participation helps us understand community perspectives on disaster preparedness technology.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                🛠️ Developer: <strong>Marcus G. Guido</strong> | 👥 Team: <strong>MAHGZ TEAM</strong> | ©2026 NU Cebu Computer Students
+            </footer>
+        </main>
+
+        <!-- Chat Sidebar -->
+        <aside class="chat-sidebar">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="chat-icon">💬</span>
+                    <div>
+                        <h3>Community Chat</h3>
+                        <span class="chat-status">PUBLIC & PERMANENT</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-empty">
+                    <span class="empty-icon">💭</span>
+                    <p>No messages yet<br>Start the conversation!</p>
+                </div>
+            </div>
+
+            <div class="chat-input-wrapper">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input"
+                    placeholder="Share tips or links..." 
+                    maxlength="200"
+                    onkeypress="if(event.key==='Enter') sendMessage()"
+                >
+                <button class="chat-send-btn" onclick="sendMessage()" title="Send message">
+                    📤
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script>
+        // ===========================
+        // CONFIGURATION
+        // ===========================
+        const CONFIG = {
+            PLATFORMS: [
+                { id: 1, name: 'Facebook', emoji: '𝐟' },
+                { id: 2, name: 'YouTube', emoji: '▶' },
+                { id: 3, name: 'Twitter/X', emoji: '𝕏' },
+                { id: 4, name: 'TikTok', emoji: '🎵' },
+                { id: 5, name: 'Instagram', emoji: '📷' },
+                { id: 6, name: 'Telegram', emoji: '📞' }
+            ]
+        };
+
+        const STATE = {
+            currentUser: null,
+            userVotes: new Set(),
+            allVotes: {},
+            allUsers: new Set(),
+            messages: [],
+            currentPage: 'voting'
+        };
+
+        // Initialize all votes to 0
+        CONFIG.PLATFORMS.forEach(p => {
+            STATE.allVotes[p.id] = 0;
+        });
+
+        // ===========================
+        // INITIALIZATION
+        // ===========================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStoredData();
+            console.log('✅ Application initialized with persistent votes');
+        });
+
+        // ===========================
+        // SCREEN TRANSITIONS
+        // ===========================
+        function startApp() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('authScreen').classList.add('active');
+        }
+
+        function showApp() {
+            document.getElementById('authScreen').classList.remove('active');
+            document.getElementById('appContainer').classList.add('active');
+            updateUserInfo();
+            renderPlatforms();
+            loadInitialMessages();
+            updateStats();
+        }
+
+        // ===========================
+        // AUTHENTICATION
+        // ===========================
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const nameInput = document.getElementById('nameInput').value.trim();
+            const sectionInput = document.getElementById('sectionInput').value;
+            const isComsai = document.getElementById('comsaiCheckbox').checked;
+
+            if (!nameInput || !sectionInput) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            STATE.currentUser = {
+                id: 'user_' + Date.now(),
+                name: nameInput,
+                section: sectionInput,
+                isComsai: isComsai,
+                loginTime: new Date()
+            };
+
+            STATE.allUsers.add(nameInput);
+            
+            // Save user info
+            localStorage.setItem('dph_user', JSON.stringify(STATE.currentUser));
+            localStorage.setItem('dph_users', JSON.stringify([...STATE.allUsers]));
+
+            showToast(`Welcome, ${nameInput}!`, 'success');
+            showApp();
+        }
+
+        function loginAsGuest() {
+            STATE.currentUser = {
+                id: 'guest_' + Date.now(),
+                name: 'Guest User',
+                section: 'Guest',
+                isComsai: false,
+                loginTime: new Date()
+            };
+
+            STATE.allUsers.add('Guest User');
+            showToast('Welcome, Guest!', 'success');
+            showApp();
+        }
+
+        function logout() {
+            if (!confirm('Logout?')) return;
+
+            STATE.currentUser = null;
+            STATE.userVotes.clear();
+            localStorage.removeItem('dph_user');
+            localStorage.removeItem('dph_user_votes');
+
+            document.getElementById('authScreen').classList.add('active');
+            document.getElementById('appContainer').classList.remove('active');
+            document.getElementById('nameInput').value = '';
+            document.getElementById('sectionInput').value = '';
+            document.getElementById('comsaiCheckbox').checked = false;
+
+            showToast('Logged out', 'success');
+        }
+
+        function updateUserInfo() {
+            if (!STATE.currentUser) return;
+            document.getElementById('userName').textContent = STATE.currentUser.name;
+            document.getElementById('userSection').textContent = STATE.currentUser.section;
+        }
+
+        // ===========================
+        // NAVIGATION
+        // ===========================
+        function navigateTo(page) {
+            STATE.currentPage = page;
+
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.nav-btn').classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.content-section').forEach(s => {
+                s.classList.remove('active');
+            });
+
+            const titles = {
+                voting: { title: '🗳️ Voting', subtitle: 'Vote on the most effective platforms' },
+                results: { title: '📊 Results', subtitle: 'Real-time voting statistics' },
+                guidelines: { title: '📋 Guidelines', subtitle: 'How to participate' },
+                about: { title: 'ℹ️ About', subtitle: 'Science, Technology & Society Case Study' }
+            };
+
+            const config = titles[page];
+            document.getElementById('pageTitle').textContent = config.title;
+            document.getElementById('pageSubtitle').textContent = config.subtitle;
+            document.getElementById(page + 'Section').classList.add('active');
+
+            if (page === 'results') updateResults();
+        }
+
+        // ===========================
+        // VOTING SYSTEM - PERMANENT VOTES
+        // ===========================
+        function renderPlatforms() {
+            const container = document.getElementById('platformsList');
+            container.innerHTML = CONFIG.PLATFORMS.map(p => `
+                <div class="platform-card ${STATE.userVotes.has(p.id) ? 'voted' : ''}" onclick="toggleVote(${p.id})">
+                    <div class="platform-checkbox"></div>
+                    <div class="platform-info">
+                        <div class="platform-name">${p.emoji} ${p.name}</div>
+                        <div class="platform-votes"><span id="vote-${p.id}">${STATE.allVotes[p.id]}</span> votes</div>
+                        <div class="platform-bar">
+                            <div class="platform-bar-fill" id="bar-${p.id}" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            updateVoteDisplay();
+        }
+
+        function toggleVote(platformId) {
+            if (!STATE.currentUser) {
+                showToast('Please login first', 'error');
+                return;
+            }
+
+            if (STATE.userVotes.has(platformId)) {
+                STATE.userVotes.delete(platformId);
+                STATE.allVotes[platformId]--;
+                showToast('Vote removed', 'success');
+            } else {
+                STATE.userVotes.add(platformId);
+                STATE.allVotes[platformId]++;
+                showToast('Vote added!', 'success');
+            }
+
+            // Save votes permanently
+            saveVotesToStorage();
+            renderPlatforms();
+            updateStats();
+        }
+
+        function updateVoteDisplay() {
+            const total = Object.values(STATE.allVotes).reduce((a, b) => a + b, 0);
+
+            CONFIG.PLATFORMS.forEach(p => {
+                const votes = STATE.allVotes[p.id];
+                const percent = total > 0 ? (votes / total) * 100 : 0;
+
+                document.getElementById(`vote-${p.id}`).textContent = votes;
+                document.getElementById(`bar-${p.id}`).style.width = percent + '%';
+
+                const card = document.querySelector(`.platform-card:nth-child(${CONFIG.PLATFORMS.indexOf(p) + 1})`);
+                if (STATE.userVotes.has(p.id)) {
+                    card.classList.add('voted');
+                } else {
+                    card.classList.remove('voted');
+                }
+            });
+        }
+
+        function updateStats() {
+            const total = Object.values(STATE.allVotes).reduce((a, b) => a + b, 0);
+            document.getElementById('myVoteCount').textContent = STATE.userVotes.size;
+            document.getElementById('totalVoteCount').textContent = total;
+            document.getElementById('participantCount').textContent = STATE.allUsers.size;
+            document.getElementById('messageCount').textContent = STATE.messages.length;
+        }
+
+        function updateResults() {
+            const container = document.getElementById('resultsList');
+            const total = Object.values(STATE.allVotes).reduce((a, b) => a + b, 0);
+
+            const sorted = [...CONFIG.PLATFORMS]
+                .sort((a, b) => STATE.allVotes[b.id] - STATE.allVotes[a.id]);
+
+            container.innerHTML = sorted.map((p, i) => {
+                const votes = STATE.allVotes[p.id];
+                const percent = total > 0 ? ((votes / total) * 100).toFixed(1) : 0;
+
+                return `
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-name">#${i + 1} ${p.emoji} ${p.name}</span>
+                            <span class="result-percentage">${percent}%</span>
+                        </div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="result-votes">${votes} ${votes === 1 ? 'vote' : 'votes'}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===========================
+        // CHAT SYSTEM
+        // ===========================
+        function renderMessages() {
+            const container = document.getElementById('chatMessages');
+
+            if (STATE.messages.length === 0) {
+                container.innerHTML = `
+                    <div class="chat-empty">
+                        <span class="empty-icon">💭</span>
+                        <p>No messages yet<br>Start the conversation!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = STATE.messages.map(msg => `
+                <div class="chat-message">
+                    <div class="message-user">${escapeHtml(msg.user)}</div>
+                    <div class="message-content">${linkify(escapeHtml(msg.content))}</div>
+                    <div class="message-time">${msg.time}</div>
+                </div>
+            `).join('');
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const content = input.value.trim();
+
+            if (!content) {
+                showToast('Message cannot be empty', 'error');
+                return;
+            }
+
+            if (!STATE.currentUser) {
+                showToast('Please login first', 'error');
+                return;
+            }
+
+            const message = {
+                user: STATE.currentUser.name,
+                content: content,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            };
+
+            STATE.messages.push(message);
+            localStorage.setItem('dph_messages', JSON.stringify(STATE.messages));
+
+            input.value = '';
+            renderMessages();
+            updateStats();
+            showToast('Message sent!', 'success');
+        }
+
+        function loadInitialMessages() {
+            const stored = localStorage.getItem('dph_messages');
+            if (stored) {
+                STATE.messages = JSON.parse(stored);
+            } else {
+                STATE.messages = [
+                    { user: '🤖 System', content: '✅ Community chat activated! All messages are saved permanently.', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+                    { user: '💡 Tip', content: 'Share disaster preparedness tips and resources with the community!', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
+                ];
+            }
+            renderMessages();
+        }
+
+        // ===========================
+        // UTILITIES
+        // ===========================
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function linkify(text) {
+            return text.replace(/(https?:\/\/[^\s]+)/g, url => 
+                `<a href="${url}" target="_blank">${url}</a>`
+            );
+        }
+
+        // ===========================
+        // PERSISTENT VOTE STORAGE
+        // ===========================
+        function saveVotesToStorage() {
+            const voteData = {
+                allVotes: STATE.allVotes,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('dph_all_votes', JSON.stringify(voteData));
+        }
+
+        function loadStoredData() {
+            // Load all votes (persistent across all users)
+            const storedVotes = localStorage.getItem('dph_all_votes');
+            if (storedVotes) {
+                try {
+                    const data = JSON.parse(storedVotes);
+                    STATE.allVotes = data.allVotes || {};
+                    console.log('✅ Loaded persistent votes:', STATE.allVotes);
+                } catch (e) {
+                    console.error('Error loading votes:', e);
+                }
+            }
+
+            // Load current user
+            const user = localStorage.getItem('dph_user');
+            if (user) STATE.currentUser = JSON.parse(user);
+
+            // Load user's votes
+            const userVotes = localStorage.getItem('dph_user_votes');
+            if (userVotes) {
+                STATE.userVotes = new Set(JSON.parse(userVotes));
+            }
+
+            // Load users list
+            const users = localStorage.getItem('dph_users');
+            if (users) STATE.allUsers = new Set(JSON.parse(users));
+
+            // Load messages
+            const msgs = localStorage.getItem('dph_messages');
+            if (msgs) STATE.messages = JSON.parse(msgs);
+        }
+
+        // Save user votes when they change
+        window.addEventListener('beforeunload', () => {
+            if (STATE.currentUser) {
+                localStorage.setItem('dph_user_votes', JSON.stringify([...STATE.userVotes]));
+            }
+        });
+    </script>
+</body>
+</html>
